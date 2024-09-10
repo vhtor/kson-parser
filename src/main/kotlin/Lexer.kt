@@ -16,11 +16,23 @@ class Lexer(private val input: String) {
           Token(TokenType.RIGHT_BRACE, char.toString())
         }
 
+        '[' -> {
+          position++
+          Token(TokenType.LEFT_BRACKET, char.toString())
+        }
+
+        ']' -> {
+          position++
+          Token(TokenType.RIGHT_BRACKET, char.toString())
+        }
+
         ':' -> {
+          position++
           Token(TokenType.COLON, char.toString())
         }
 
         ',' -> {
+          position++
           Token(TokenType.COMMA, char.toString())
         }
 
@@ -40,6 +52,28 @@ class Lexer(private val input: String) {
           }
         }
 
+        in '0'..'9', '-' -> {
+          val start = position
+
+          if (char == '-') {
+            position++
+          }
+
+          while (position < input.length && input[position].isDigit()) {
+            position++
+          }
+
+          if (position < input.length && input[position] == '.') {
+            position++
+
+            while (position < input.length && input[position].isDigit()) {
+              position++
+            }
+          }
+
+          Token(TokenType.NUMBER, input.substring(start, position))
+        }
+
         else -> {
           if (char.isWhitespace()) {
             position++
@@ -49,6 +83,7 @@ class Lexer(private val input: String) {
         }
       }
     }
+
     return Token(TokenType.EOF, "")
   }
 }
