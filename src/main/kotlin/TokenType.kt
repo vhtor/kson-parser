@@ -7,8 +7,10 @@ enum class TokenType {
   RIGHT_BRACKET,
   COLON,
   COMMA,
+  BOOLEAN,
   STRING,
   NUMBER,
+  NULL,
   EOF,
   INVALID
 }

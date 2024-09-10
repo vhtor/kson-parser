@@ -75,10 +75,33 @@ class Lexer(private val input: String) {
         }
 
         else -> {
+          if (char.isLetter()) {
+            val start = position
+
+            while (position < input.length && input[position].isLetter()) {
+              position++
+            }
+
+            return when (val value = input.substring(start, position)) {
+              "true" -> Token(TokenType.BOOLEAN, value)
+              "false" -> Token(TokenType.BOOLEAN, value)
+              "null" -> Token(TokenType.NULL, value)
+              else -> {
+                val lowercaseValue = value.lowercase()
+
+                when {
+                  lowercaseValue in listOf("true", "false", "null") -> Token(TokenType.INVALID, value)
+                  else -> Token(TokenType.STRING, value)
+                }
+              }
+            }
+          }
+
           if (char.isWhitespace()) {
             position++
             continue
           }
+
           Token(TokenType.INVALID, char.toString())
         }
       }

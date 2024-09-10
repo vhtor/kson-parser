@@ -13,7 +13,7 @@ class JsonParserTest {
     val lexer = Lexer(content)
     val parser = Parser(lexer)
 
-    assertEquals(false, parser.parse())
+    assertFalse(parser.parse())
   }
 
   @Test
@@ -58,6 +58,51 @@ class JsonParserTest {
     val lexer = Lexer(content)
     val parser = Parser(lexer)
 
-    assertEquals(true, parser.parse())
+    assertTrue(parser.parse())
+  }
+
+  @Test
+  fun `Test valid JSON file with key_value`() {
+    val content = File("test_jsons/with_values/valid_0.json").readText()
+    val lexer = Lexer(content)
+    val parser = Parser(lexer)
+
+    assertTrue(parser.parse())
+  }
+
+  @Test
+  fun `Test valid JSON file with more than one key_value`() {
+    val content = File("test_jsons/with_values/valid_1.json").readText()
+    val lexer = Lexer(content)
+    val parser = Parser(lexer)
+
+    assertTrue(parser.parse())
+  }
+
+  @Test
+  fun `Test valid JSON file with various value types`() {
+    val content = File("test_jsons/with_values/valid_2.json").readText()
+    val lexer = Lexer(content)
+    val parser = Parser(lexer)
+
+    assertTrue(parser.parse())
+  }
+
+  @Test
+  fun `Test valid JSON file with empty object and array`() {
+    val content = File("test_jsons/with_values/valid_3.json").readText()
+    val lexer = Lexer(content)
+    val parser = Parser(lexer)
+
+    assertTrue(parser.parse())
+  }
+
+  @Test
+  fun `Test valid JSON file with filled object and array`() {
+    val content = File("test_jsons/with_values/valid_4.json").readText()
+    val lexer = Lexer(content)
+    val parser = Parser(lexer)
+
+    assertTrue(parser.parse())
   }
 }

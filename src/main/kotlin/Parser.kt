@@ -59,10 +59,11 @@ class Parser(private val lexer: Lexer) {
 
   private fun parseValue(): Boolean {
     return when (currentToken.type) {
-      TokenType.STRING, TokenType.NUMBER -> {
+      TokenType.STRING, TokenType.NUMBER, TokenType.BOOLEAN, TokenType.NULL -> {
         advance()
         true
       }
+
       TokenType.LEFT_BRACE -> parseObject()
       TokenType.LEFT_BRACKET -> parseArray()
       else -> false
